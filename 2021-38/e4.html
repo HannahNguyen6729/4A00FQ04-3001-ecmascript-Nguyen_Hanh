@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML5 Page</title>
+  </head>
+  <body>
+    <script>
+      console.log(this); //window
+      console.log(this == window); //true
+      document.write("<h2> Hello World </h2>");
+      for (let key in this) {
+        // console.log(key);
+        document.write("key = " + key);
+        document.write("<br>");
+        document.write("value = " + this[key]);
+        document.write("<br>");
+      }
+
+      document.write((this.key1 = "donald duck"));
+      this.key1 = "donald duck";
+      document.write((window.key2 = "mickey mouse"));
+      var key3 = "uncle scrooge";
+    </script>
+  </body>
+</html>
