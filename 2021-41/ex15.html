@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <br /><br />
+    <form>
+      <label>enter Id</label>
+      <input type="text" id="id" />
+    </form>
+    <br />
+    <div>
+      <span>Name: </span>
+      <span id="name"></span>
+      <br />
+      <span>Height: </span>
+      <span id="height"></span>
+      <br />
+      <span>Mass: </span>
+      <span id="mass"></span>
+    </div>
+    <br />
+    <br />
+    <button id="btn">fetch</button>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      let btn = document.getElementById("btn");
+      btn.addEventListener("click", fetchAPI);
+
+      let nameX = document.getElementById("name");
+      let heightX = document.getElementById("height");
+      let massX = document.getElementById("mass");
+
+      function fetchAPI() {
+        let idValue = document.getElementById("id").value;
+        axios
+          .get(`https://swapi.dev/api/people/${idValue}/`)
+          .then((response) => response.data)
+          .then((result) => {
+            let name = result.name;
+            let mass = result.mass;
+            let height = result.height;
+            nameX.innerHTML = name;
+            heightX.innerHTML = height;
+            massX.innerHTML = mass;
+          })
+          .catch((err) => console.log(err));
+      }
+    </script>
+  </body>
+</html>

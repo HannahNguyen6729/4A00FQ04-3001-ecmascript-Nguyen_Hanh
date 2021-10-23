@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <label for="mass"> Mass:</label><br />
+      <input id="mass" name="mass" />
+      <br />
+
+      <label for="height">Height:</label><br />
+      <input id="height" name="height" /><br />
+    </form>
+    <br /><br />
+    <!-- <button id="btn">press me</button> -->
+    <br />
+    <p id="bmi">BMI</p>
+    <script>
+      // let btn = document.getElementById("btn");
+      // btn.addEventListener("keypress", caculateBMI);
+
+      function caculateBMI() {
+        let height = document.getElementById("height").value;
+        let weight = document.getElementById("mass").value;
+        let bmiValue = weight / (height * height);
+        let showBMI = document.getElementById("bmi");
+        showBMI.innerHTML = bmiValue.toFixed(2);
+      }
+      window.addEventListener(
+        "keypress",
+        function (e) {
+          if (e.keyCode === 13) {
+            caculateBMI();
+          }
+        },
+        false
+      );
+    </script>
+  </body>
+</html>

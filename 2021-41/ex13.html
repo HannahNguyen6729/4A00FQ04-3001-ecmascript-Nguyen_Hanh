@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">click to add "Hello"</button>
+    <button id="delete">Delete</button>
+    <br />
+    <br />
+
+    <label for="text"> Text: </label>
+    <input type="text" id="addText" />
+    <button id="btn-addText">add text</button>
+    <ul>
+      <li>hello</li>
+    </ul>
+
+    <script>
+      let btn = document.getElementById("btn");
+      btn.addEventListener("click", createLi);
+      let btnAdd = document.getElementById("btn-addText");
+      btnAdd.addEventListener("click", addText);
+
+      function addText() {
+        let text = document.getElementById("addText").value;
+        let li = document.createElement("li");
+        li.innerHTML = text;
+        let ul = document.querySelector("ul");
+        ul.appendChild(li);
+      }
+      function createLi() {
+        let li = document.createElement("li");
+        li.innerHTML = "Hello";
+        let ul = document.querySelector("ul");
+        ul.appendChild(li);
+      }
+
+      let btnDelete = document.getElementById("delete");
+      btnDelete.addEventListener("click", deleteLastLi);
+      function deleteLastLi() {
+        let list = document.querySelector("ul");
+        console.log(list);
+        list.removeChild(list.lastChild);
+      }
+    </script>
+  </body>
+</html>

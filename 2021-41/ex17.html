@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <br /><br />
+    <form>
+      <label>enter latitude </label>
+      <input type="text" id="lat" />
+      <br /><br />
+      <label>enter longitude</label>
+      <input type="text" id="lon" />
+    </form>
+    <br />
+    <br />
+    <button id="btn">click to get data</button>
+    <button id="btnStore">click to store data</button>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      let btn = document.getElementById("btn");
+      btn.addEventListener("click", getData);
+
+      let btnStore = document.getElementById("btnStore");
+      btnStore.addEventListener("click", storeData);
+
+      function storeData() {
+        let latInput = document.getElementById("lat").value;
+        let lonInput = document.getElementById("lon").value;
+        //The latitude must be a number between -90 and 90 and the longitude between -180 and 180.
+
+        if (
+          isFinite(latInput) &&
+          Math.abs(latInput) <= 90 &&
+          isFinite(lonInput) &&
+          Math.abs(lonInput) <= 180
+        ) {
+          axios
+            .post("http://localhost:8080/locations/", {
+              lat: latInput,
+              lon: lonInput,
+            })
+            .then((res) => console.log(res.data));
+          // .catch((err) => console.log(err));
+        } else {
+          alert(
+            "The latitude must be a number between -90 and 90 and the longitude between -180 and 180. Enter a valid Latitude or Longitude!"
+          );
+        }
+      }
+
+      function getData() {
+        axios
+          .get("http://localhost:8080/locations/")
+          .then((res) => res.data)
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err));
+      }
+    </script>
+  </body>
+</html>

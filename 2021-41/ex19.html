@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      table {
+        /* border: 1px solid black; */
+        border-collapse: collapse;
+      }
+      th {
+        background: rgb(236, 241, 241);
+      }
+      th,
+      td {
+        padding-top: 5px;
+        padding-bottom: 8px;
+        padding-left: 10px;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+      }
+    </style>
+    <table style="width: 60%">
+      <tr style="border-top: 1px solid #ddd">
+        <th>#</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Action</th>
+      </tr>
+      <tbody id="LocationListTable"></tbody>
+      <tr>
+        <td></td>
+        <td>
+          <input type="text" placeholder="latitude" id="latAdd" />
+        </td>
+        <td>
+          <input type="text" placeholder="longitude" id="lonAdd" />
+        </td>
+        <td style="text-align: center">
+          <button id="btnAdd" onclick="addLocation()">Add</button>
+        </td>
+      </tr>
+      <!-- <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td> <button id="btnDelete">delete</button> </td>
+      </tr> -->
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      //function 1: get data
+      function getData() {
+        axios
+          .get("http://localhost:8080/locations/")
+          .then((res) => res.data)
+          .then((data) => {
+            console.log(data);
+            renderData(data);
+          })
+          .catch((err) => console.log(err));
+      }
+      getData();
+
+      //function 2: show data on the browser
+      function renderData(data) {
+        let row = "";
+        //     for (let obj of data) {
+        //       row += `<tr>
+        //       <td></td>
+        //       <td>${obj.lat}</td>
+        //       <td>${obj.lon}</td>
+        //       <td> <button id="btnDelete">delete</button> </td>
+        //   </tr>
+        //   `;
+        //     }
+        data.map((obj, index) => {
+          row += `
+          <tr >
+          <td style = "text-align: center;">${index + 1}</td>
+          <td>${obj.lat}</td>
+          <td>${obj.lon}</td>
+          <td style="text-align:center"> 
+            <button id="btnDelete" onclick = "deleteLocation(${
+              obj.id
+            })">delete</button> 
+            </td>
+          </tr>
+      `;
+        });
+        let tbl = document.getElementById("LocationListTable");
+        tbl.innerHTML = row;
+      }
+
+      //function 3: delete location
+      //let btnDelete = document.getElementById("btnDelete");
+      // btnDelete.addEventListener("click", deleteLocation);
+
+      function deleteLocation(objId) {
+        axios
+          .delete(`http://localhost:8080/locations/${objId}/`)
+          .then((res) => {
+            console.log(res);
+            //show list of locations after deleting 1 location
+            getData();
+          })
+          .catch((err) => console.log(err));
+      }
+
+      //function 4: add location
+      function addLocation() {
+        let latInput = document.getElementById("latAdd").value;
+        let lonInput = document.getElementById("lonAdd").value;
+        //The latitude must be a number between -90 and 90 and the longitude between -180 and 180.
+        if (
+          isFinite(latInput) &&
+          Math.abs(latInput) <= 90 &&
+          isFinite(lonInput) &&
+          Math.abs(lonInput) <= 180
+        ) {
+          axios
+            .post("http://localhost:8080/locations/", {
+              lat: latInput,
+              lon: lonInput,
+            })
+            .then((res) => {
+              console.log(res);
+              getData();
+            });
+          // .catch((err) => console.log(err));
+        } else {
+          alert(
+            "The latitude must be a number between -90 and 90 and the longitude between -180 and 180. Enter a valid Latitude or Longitude!"
+          );
+        }
+      }
+    </script>
+  </body>
+</html>

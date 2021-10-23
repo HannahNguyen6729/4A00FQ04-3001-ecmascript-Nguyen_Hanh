@@ -1,0 +1,35 @@
+GET https://swapi.dev/api/people/1/
+#####
+GET https://swapi.dev/api/people/
+###
+GET http://localhost:8080/locations/1/
+###
+GET http://localhost:8080/locations/
+###
+DELETE http://localhost:8080/locations/2/
+####
+GET http://localhost:8080/locations/
+####
+POST http://localhost:8080/locations/
+Content-type: application/json
+
+{"lat": 70, "lon": 80}
+###
+GET http://localhost:8080/locations/2
+###
+POST http://localhost:8080/locations/
+Content-type: application/json
+
+{"lat": 70, "lon": 80}
+####
+GET http://localhost:8080/locations/
+
+
+
+
+
+
+# {"lat": 90,"lon": 100}
+# {"lat": 70, "lon": 80}
+//not given  "id":3 because backend will create it
+
